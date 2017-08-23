@@ -1,0 +1,10 @@
+*{
+  border: 1px solid black;
+}
+
+@media only screen and (min-device-width: 400px) {
+  theme{
+    width:200px;
+    height: auto;
+  }
+}
