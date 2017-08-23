@@ -12,22 +12,25 @@
   <body>
     <div class="wrapper">
       <header>Hangman Game - v.1.0</header>
-      <div class="row">
-        <div class="container">
-          <div class="col-sm-6">
-            <!-- <img class="theme" src="/Users/brendandailey/GW_Coding_Class/Homework/Hangman_Game/assets/images/classic_90s_movies.jpg"> -->
-            <div class="buttons"></div>
-            <button class="btn">Hint</button>
-            <button class="btn">Play Again</button>
+      <div class = "container">
+        <div id = "movie"><img src="">
+        </div>
+        <div id = "game-selection">
+          <p>Press any key to play!</p>
+          <div>
+            <h3 class="selection-title">Wins: </h3>
+            <div id="wins"></div>
           </div>
-          <div class="col-sm-6">
-            <h2>Let's Play Some Hangman</h2>
-            <p>Choose a letter from the choices below to begin.</p>
-            <div id="buttons"></div>
+          
+          <div id="guesses-remaining">
+            <h2 class="section-title">Guesses Remaining: </h2>
+          </div>
+          <div id="guessed-letters">
+            <h2 class="selection-title">Letter You Have Chosen</h2>
           </div>
         </div>
-      </div>
     </div>
-    <script type="text/javascript" src="assets/js/hangman_game.js"></script>
+  </div>
+  <script type="text/javascript" src="assets/js/hangman_game.js"></script>
   </body>
 </html>

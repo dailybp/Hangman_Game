@@ -10,21 +10,26 @@ window.onload = function(){
         'Dumb and Dumber', 'Starship Troopers', 'Clerks', 'The Truman Show'];
 
 
-  var wordBeingPlayed = null; //
-  var lettersOfWord = [];//
-  var matchingLetters = [];//
-  var guessedLetters = [];//
-  var guessesLeft = 0; //
-  var letterGuessed = null;//
-  var wins = 0;//
+  var wordBeingPlayed = null; //creates a variable for the word being played in the game to be used as a reference
+  var lettersOfWord = [];//creates an array of the letters in the word to reference in comparative statements
+  var matchingLetters = [];//creates an array of matching letters
+  var guessedLetters = [];//creates an array of letters the user has already guessed
+  var guessesLeft = 0; //creates a variable of the number of guesses the player can make
+  var letterGuessed = null;//creates a variable for the letter the player has guessed
+  var wins = 0;//creates a variable for how many wins the player has
 
+//sets up the hangman game by picking a random movie
+//splits up the letters of the movie and puts them in the lettersOfWord array
+//and creates a space of blanks
   setup = function(){
     this.wordBeingPlayed = movies[Math.floor(Math.random()*movies.length)];
     this.lettersOfWord = this.wordBeingPlayed.split("");
-    this.wordView();
+    this.buildWordView();
     this.updateGuessesLeft();
   }
 
+//updates the page whenever the number of guesses reaches zero
+//or if the player wins a game
   updatePage = function(letter){
     if(this.guessesLeft === 0){
       this.restart();
@@ -40,22 +45,27 @@ window.onload = function(){
     }
   }
 
+//updates the number of guesses the player has left by comparing the input
+//to the guessedLetters array and whether the letter is in the word
   updateGuessesLeft = function(letter){
 
     if((this.guessedLetters.indexOf(letter) === -1) && (this.lettersOfWord.indexOf(letter) === -1)){
       this.guessedLetters.push(letter);
       this.guessesLeft--;
 
-      //innerHTML stuff
+      document.querySelector("#guesses-remaining").innerHTML = this.guessesLeft;
+      document.querySelector("#guessed-letters").innerHTML = this.guessedLetters.join(", ");
     }
   }
 
-  setTotalGuesses = fucntion(){
+//sets the total number of guesses the player can make to the length of the word plus 3
+  updateTotalGuesses = function(){
     this.guessesLeft = this.lettersOfWord.length + 3;
 
-    //innerHTML stuff
+    document.querySelector("#guesses-remaining").innerHTML = this.guessesLeft;
   }
 
+//
   updateMatchingLetters = function(letter){
     for(var i = 0; i < this.lettersOfWord.length; i++){
       if((letter === this.lettersOfWord[i]) && (this.matchingLetters.indexOf(letter) === -1)){
@@ -78,6 +88,7 @@ window.onload = function(){
     document.querySelector("#current-word").innerHTML = wordView;
   }
 
+//a function to restart the game
   restart = function(){
     document.querySelector("#guessed-letters").innerHTML = "";
     this.wordBeingPlayed = null;
@@ -91,6 +102,7 @@ window.onload = function(){
     this.buildWordView();
   }
 
+//a function that tallies the number of wins the player has
   updateWins = function(){
     var win;
     if(this.matchingLetters.length === 0){
@@ -120,31 +132,32 @@ window.onload = function(){
 
   setup();
   document.onkeyup = function(event){
-    
+    letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+    updatePage(letterGuessed);
   }
 
-  var getHint; //links the hint button to element getHint
-  var guess; //player guess element
-  var lives = 10; //number of lives the player has before the hangman is complete
-  var counter; //a counter element on the number of correct guesses
-  var space; //number of spaces in the word
 
-  //Creates the alphabet buttons to be used to guess the movie title
-  var buttons = function (){
-    var alphabetButtons = document.getElementsById('buttons'); //creates new buttons for the alphabet buttons in the html document
-    var letters = document.createElement('ul'); //creates a list of each letter of the alphabet in the html document
-
-    for(var i = 0; i < alphabet.length; i++){
-        letters.id="alphabet";
-        var alphabetList = document.createElement('li');
-        alphabetList.innerHTML = alphabet[i];
-        alphabetList.id="letters";
-        alphabetList.innerHTML = alphabet[i];
-        check();//calls the check function to identify if the letter has already been clicked
-        alphabetButtons.appendChild(letters);
-        letter.appendChild(alphabetList);
-      }
-    }
-
-  }
-}
+  // var getHint; //links the hint button to element getHint
+  // var guess; //player guess element
+  // var lives = 10; //number of lives the player has before the hangman is complete
+  // var counter; //a counter element on the number of correct guesses
+  // var space; //number of spaces in the word
+  //
+  // //Creates the alphabet buttons to be used to guess the movie title
+  // var buttons = function (){
+  //   var alphabetButtons = document.getElementsById('buttons'); //creates new buttons for the alphabet buttons in the html document
+  //   var letters = document.createElement('ul'); //creates a list of each letter of the alphabet in the html document
+  //
+  //   for(var i = 0; i < alphabet.length; i++){
+  //       letters.id="alphabet";
+  //       var alphabetList = document.createElement('li');
+  //       alphabetList.innerHTML = alphabet[i];
+  //       alphabetList.id="letters";
+  //       alphabetList.innerHTML = alphabet[i];
+  //       check();//calls the check function to identify if the letter has already been clicked
+  //       alphabetButtons.appendChild(letters);
+  //       letter.appendChild(alphabetList);
+  //     }
+  //   }
+  //
+  // }
